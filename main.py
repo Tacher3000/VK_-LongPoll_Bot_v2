@@ -40,6 +40,8 @@ class MyVkLongPoll(VkLongPoll):
                 current_timestamp = int(time.time())
                 timestamp = f.marks(240453492)
                 t = timestamp['time']
+                
+                f.send_message(240453492, (current_timestamp - t) / (24 * 60 * 60))
 
                 # проверка на колличество дней
                 if (current_timestamp - t > warning * 24 * 60 * 60) and (current_timestamp - t < deadline * 24 * 60 * 60):
@@ -83,13 +85,7 @@ def main():
             # проверяет есть ли человек который пишет в списке администрации
             for i in range(f.count_lines('administrators.txt')):
                 if id == int(f.open_txt_line(i, 'administrators.txt')):
-                    if (message == '!отметиться' or message == '!очисть' or message == '!очистить'):
-                        f.check_in(id)
-                        k += 1
-                    elif (message == '!сколько осталось?' or message == '!остаток' or message == '!сколько'):
-                        f.send_message(id, f.passed())
-                        k += 1
-                    elif message == '!команды':
+                    if message == '!команды':
                         f.send_message(id, f.open_txt(
                             'administrators_comands.txt'))
                         k += 1
@@ -120,10 +116,6 @@ def main():
                         except FileNotFoundError:
                             print(
                                 'изображение для удаления не найдено(что странно).')
-                        k += 1
-                    elif message == '!прибавить':
-                        f.mark1()
-                        f.send_message(id, 'добавлен 1 день')
                         k += 1
                     elif message == '!посмотреть':
                         f.me_diary(id, '')
