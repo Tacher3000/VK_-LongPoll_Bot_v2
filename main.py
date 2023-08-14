@@ -1,4 +1,5 @@
 import requests
+import datetime
 import time
 import os
 from vk_api import VkApi
@@ -40,8 +41,14 @@ class MyVkLongPoll(VkLongPoll):
                 current_timestamp = int(time.time())
                 timestamp = f.marks(240453492)
                 t = timestamp['time']
-                
-                f.send_message(240453492, (current_timestamp - t) / (24 * 60 * 60))
+
+                # Преобразование Unix Timestamp в объект datetime
+                dt_object = datetime.datetime.fromtimestamp(t)
+
+                # Преобразование нового объекта datetime в строку в читаемом формате
+                new_readable_time = dt_object.strftime('%Y-%m-%d %H:%M:%S')
+
+                f.send_message(240453492, f'был в сети {new_readable_time}')
 
                 # проверка на колличество дней
                 if (current_timestamp - t > warning * 24 * 60 * 60) and (current_timestamp - t < deadline * 24 * 60 * 60):
@@ -65,6 +72,17 @@ def main():
     vk_session = VkApi(token=token)
     vk = vk_session.get_api()
     longpoll = MyVkLongPoll(vk_session)
+
+    timestamp = f.marks(240453492)
+    t = timestamp['time']
+
+    # Преобразование Unix Timestamp в объект datetime
+    dt_object = datetime.datetime.fromtimestamp(t)
+
+    # Преобразование нового объекта datetime в строку в читаемом формате
+    new_readable_time = dt_object.strftime('%Y-%m-%d %H:%M:%S')
+
+    f.send_message(240453492, f'был в сети {new_readable_time}')
 
 
     for event in longpoll.listen():
