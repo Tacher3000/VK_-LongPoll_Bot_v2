@@ -45,10 +45,16 @@ class MyVkLongPoll(VkLongPoll):
                 # Преобразование Unix Timestamp в объект datetime
                 dt_object = datetime.datetime.fromtimestamp(t)
 
-                # Преобразование нового объекта datetime в строку в читаемом формате
-                new_readable_time = dt_object.strftime('%Y-%m-%d %H:%M:%S')
+                # Создание объекта timedelta для добавления 3 часов
+                delta = datetime.timedelta(hours=3)
 
-                f.send_message(240453492, f'был в сети {new_readable_time}')
+                # Прибавление timedelta к объекту datetime
+                new_dt_object = dt_object + delta
+
+                # Преобразование нового объекта datetime в строку в читаемом формате
+                new_readable_time = new_dt_object.strftime('%Y-%m-%d %H:%M:%S')
+
+                f.send_message(240453492, f'был в сети {new_readable_time} по мск')
 
                 # проверка на колличество дней
                 if (current_timestamp - t > warning * 24 * 60 * 60) and (current_timestamp - t < deadline * 24 * 60 * 60):
@@ -79,8 +85,14 @@ def main():
     # Преобразование Unix Timestamp в объект datetime
     dt_object = datetime.datetime.fromtimestamp(t)
 
+    # Создание объекта timedelta для добавления 3 часов
+    delta = datetime.timedelta(hours=3)
+
+    # Прибавление timedelta к объекту datetime
+    new_dt_object = dt_object + delta
+
     # Преобразование нового объекта datetime в строку в читаемом формате
-    new_readable_time = dt_object.strftime('%Y-%m-%d %H:%M:%S')
+    new_readable_time = new_dt_object.strftime('%Y-%m-%d %H:%M:%S')
 
     f.send_message(240453492, f'был в сети {new_readable_time}')
 
