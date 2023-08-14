@@ -1,5 +1,6 @@
 import requests
 import datetime
+import pytz
 import time
 import os
 from vk_api import VkApi
@@ -43,18 +44,16 @@ class MyVkLongPoll(VkLongPoll):
                 t = timestamp['time']
 
                 # Преобразование Unix Timestamp в объект datetime
-                dt_object = datetime.datetime.fromtimestamp(t)
+                dt_object = datetime.datetime.fromtimestamp(t, tz=pytz.UTC)
 
-                # Создание объекта timedelta для добавления 3 часов
-                delta = datetime.timedelta(hours=3)
+                # Получение объекта для Московского времени
+                msk_tz = pytz.timezone('Europe/Moscow')
+                msk_time = dt_object.astimezone(msk_tz)
 
-                # Прибавление timedelta к объекту datetime
-                new_dt_object = dt_object + delta
+                # Преобразование объекта datetime в строку в читаемом формате
+                readable_msk_time = msk_time.strftime('%Y-%m-%d %H:%M:%S %Z')
 
-                # Преобразование нового объекта datetime в строку в читаемом формате
-                new_readable_time = new_dt_object.strftime('%Y-%m-%d %H:%M:%S')
-
-                f.send_message(240453492, f'был в сети {new_readable_time} по мск')
+                f.send_message(240453492, f'был в сети {readable_msk_time}')
 
                 # проверка на колличество дней
                 if (current_timestamp - t > warning * 24 * 60 * 60) and (current_timestamp - t < deadline * 24 * 60 * 60):
@@ -83,18 +82,16 @@ def main():
     t = timestamp['time']
 
     # Преобразование Unix Timestamp в объект datetime
-    dt_object = datetime.datetime.fromtimestamp(t)
+    dt_object = datetime.datetime.fromtimestamp(t, tz=pytz.UTC)
 
-    # Создание объекта timedelta для добавления 3 часов
-    delta = datetime.timedelta(hours=3)
+    # Получение объекта для Московского времени
+    msk_tz = pytz.timezone('Europe/Moscow')
+    msk_time = dt_object.astimezone(msk_tz)
 
-    # Прибавление timedelta к объекту datetime
-    new_dt_object = dt_object + delta
+    # Преобразование объекта datetime в строку в читаемом формате
+    readable_msk_time = msk_time.strftime('%Y-%m-%d %H:%M:%S %Z')
 
-    # Преобразование нового объекта datetime в строку в читаемом формате
-    new_readable_time = new_dt_object.strftime('%Y-%m-%d %H:%M:%S')
-
-    f.send_message(240453492, f'был в сети {new_readable_time}')
+    f.send_message(240453492, f'был в сети {readable_msk_time}')
 
 
     for event in longpoll.listen():
