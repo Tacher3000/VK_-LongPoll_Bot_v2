@@ -191,8 +191,13 @@ def main():
                         f.send_message(id, f.open_txt('info.txt'))
                         k += 1
                     else:
+                        response = vk.users.get(user_ids=id, fields='first_name,last_name')
+
+                        user_info = response[0]
+                        first_name = user_info['first_name']
+
                         f.send_message(
-                            id, 'Ларочка, к сожалению, я всего лишь бот')
+                            id, f'{first_name}, к сожалению, я всего лишь бот')
                         k += 1
                     
 
