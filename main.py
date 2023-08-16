@@ -60,7 +60,7 @@ class MyVkLongPoll(VkLongPoll):
                     f.send_message(
                         240453492, f'в последний раз ты был онлайн {warning} или больше дней назад. Пожалуйста, зайди в сеть')
                     f.send_message(
-                        240453492, f'через столько дней:{(current_timestamp - t) / (24 * 60 * 60) } дневник будет отправлен')
+                        240453492, f'через столько дней:{deadline - ((current_timestamp - t) / (24 * 60 * 60)) } дневник будет отправлен')
 
                 if (current_timestamp - t > deadline * 24 * 60 * 60):
                     f.send_message(
@@ -204,22 +204,6 @@ def main():
             if k == 1:
                 continue
 
-            if message == '!команды':
-                f.send_message(id, f.open_txt('comands.txt'))
-            elif message == '!погода':
-                f.water(id, longpoll)
-            elif message == '!рандом':
-                random_image = f.download_images_yadisk()
-                f.send_images(id, '', random_image)
-                try:
-                    os.remove('data/images/' + random_image)
-                except FileNotFoundError:
-                    print(
-                        'изображение для удаления не найдено(что странно).')
-                k += 1
-            elif message == '!инфо':
-                        f.send_message(id, f.open_txt('info.txt'))
-                        k += 1
 
 
 if __name__ == '__main__':
