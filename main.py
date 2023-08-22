@@ -100,8 +100,8 @@ def main():
             # message
             message = event.text
 
-            # добавление в историю
-            f.history_message(event, message)
+            # добавление в историю (отключено из-за бесполезности и ошибок)
+            # f.history_message(event, message)
 
             # преобразование слова в нижний регистр
             message = message.lower()
