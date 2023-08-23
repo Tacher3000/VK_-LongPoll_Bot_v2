@@ -95,7 +95,7 @@ def main():
 
 
     for event in longpoll.listen():
-        if event.type == VkEventType.MESSAGE_NEW and event.to_me:
+        if event.type == VkEventType.MESSAGE_NEW and event.to_me and event.from_user:
             k = 0
             # message
             message = event.text
