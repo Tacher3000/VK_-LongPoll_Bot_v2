@@ -13,6 +13,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
+
 # через сколько дней попросят отметиться
 warning = 5
 
@@ -165,10 +166,10 @@ def main():
             # проверка на людей из списка проверенных людей
             for i in range(f.count_lines('trusted_people.txt')):
                 if id == int(f.open_txt_line(i, 'trusted_people.txt')):
-                    if (message == '!отправь'):
-                        f.diary()
-                        k += 1
-                    elif slovar.get(message) != None:
+                    # if (message == '!отправь'):
+                    #     f.diary()
+                    #     k += 1
+                    if slovar.get(message) != None:
                         f.send_message(id, slovar.get(message))
                         k += 1
                     elif message == '!команды':
@@ -201,9 +202,44 @@ def main():
                         k += 1
                     
 
-            if k == 1:
-                continue
+            # if k == 1:
+            #     continue
 
+            # if slovar.get(message) != None:
+
+            #     f.send_message(id, slovar.get(message))
+            #     k += 1
+            # elif message == '!команды':
+            #     f.send_message(id, f.open_txt(
+            #         'comands.txt'))
+            #     k += 1
+            # elif message == '!погода':
+            #     f.water(id, longpoll)
+            #     k += 1
+            # elif message == '!рандом':
+            #     random_image = f.download_images_yadisk()
+            #     f.send_images(id, '', random_image)
+            #     try:
+            #         os.remove('data/images/' + random_image)
+            #     except FileNotFoundError:
+            #         print(
+            #             'изображение для удаления не найдено(что странно).')
+            #     k += 1
+            # elif message == '!инфо':
+            #     f.send_message(id, f.open_txt('info.txt'))
+            #     k += 1
+            # else:
+            #     response = vk.users.get(user_ids=id, fields='first_name,last_name')
+
+            #     user_info = response[0]
+            #     first_name = user_info['first_name']
+
+            #     f.send_message(
+            #         id, f'{first_name}, к сожалению, я всего лишь бот')
+            #     k += 1
+
+            # if k == 1:
+            #     continue
 
 
 if __name__ == '__main__':
